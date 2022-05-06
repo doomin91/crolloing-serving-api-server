@@ -11,14 +11,3 @@ const pool = mysql.createPool({
 
 const promisePool = pool.promise(); 
 module.exports = promisePool;
-
-// const connection = {
-//     host:'3.39.30.117',
-//     port: '3306',
-//     user:'root',
-//     password:'Gumdong1!530',
-//     database:'TODO',
-//     connectionLimit : 10,
-// };
-
-// module.exports = mysql.createPool(connection);

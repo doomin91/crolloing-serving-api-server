@@ -1,6 +1,6 @@
 'use strict'
 
-const wordModel = require("../models/wordModel")
+const ToDo = require("../models/toDoModel")
 
 const findAll = async function (req, res) {
     let result = await ToDo.findAll();
