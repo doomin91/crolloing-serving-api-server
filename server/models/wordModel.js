@@ -1,7 +1,7 @@
 const db = require("../lib/database")
 
 exports.getWords = async function(){
-    let sql = `SELECT * FROM TBL_WORD_LIST WHERE TL_DEL_YN = 'N'`;
+    let sql = `SELECT * FROM TBL_WORD_LIST WHERE WL_DEL_YN = 'N'`;
     let [wordList, fields] = await db.query(sql);
     return wordList;
 }
