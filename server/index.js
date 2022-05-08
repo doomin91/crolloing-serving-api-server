@@ -4,6 +4,7 @@ const express = require('express')
 const app = express()
 const routes_path = require('./routes/index.js')
 const cors = require('cors');
+const { swaggerUi, specs } = require('./src/swagger.js')
 
 // request * 허용
 const runType = "DEV"
@@ -16,6 +17,7 @@ if(runType == "DEV"){
 app.use(express.json());
 app.use(express.urlencoded({ extended : true }));
 app.use('/', routes_path);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, { explorer:true }))
 
 
 app.listen(5000, function(){
