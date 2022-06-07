@@ -24,20 +24,20 @@ const wordController = require("../controllers/wordController")
      *    post:
      *      tags:
      *      - word
-     *      description: 모든 토픽 조회
+     *      description: 새로운 워드를 추가합니다.
      *      parameters:
      *      - in: body
      *        name: Request
      *        description: 모든 값을 알맞게 넣어주세요.
      *        schema:
-     *          $ref: '#/definitions/User'
+     *          $ref: '#/definitions/insertWord'
      *      produces:
      *      - application/json
      *      responses:
      *       200:
-     *        description: 모든 토픽 조회
+     *        description: 생성이 완료되었습니다.
      * definitions:
-     *  User:
+     *  insertWord:
      *    type: object
      *    required:
      *      - cate
@@ -58,6 +58,37 @@ const wordController = require("../controllers/wordController")
      *        type: integer
      */
      router.post("/api/insertWord",               wordController.insertWord)
+
+
+    /**
+     * @swagger
+     *  /api/deleteWord:
+     *    post:
+     *      tags:
+     *      - word
+     *      description: 특정 토픽을 삭제합니다.
+     *      parameters:
+     *      - in: body
+     *        name: Request
+     *        description: 모든 값을 알맞게 넣어주세요.
+     *        schema:
+     *          $ref: '#/definitions/deleteWord'
+     *      produces:
+     *      - application/json
+     *      responses:
+     *       200:
+     *        description: 삭제가 완료되었습니다.
+     * definitions:
+     *  deleteWord:
+     *    type: object
+     *    required:
+     *      - seq
+     *    properties:
+     *      seq:
+     *        type: integer
+     */
+     router.post("/api/deleteWord",               wordController.deleteWord)
+
 
     /**
      * @swagger

@@ -13,6 +13,13 @@ exports.insertWord = async function(data){
     return result
 }
 
+exports.deleteWord = async function(wordSeq){
+    let sql = `UPDATE TBL_WORD_LIST SET WL_DEL_YN = 'Y' WHERE WL_SEQ = ${wordSeq}`
+
+    let [result, fields] = await db.execute(sql);
+    return result
+}
+
 exports.getAllNode = async function(todoSeq){
     let sql, node, result=[], isNullTail=false;
     // Head Search

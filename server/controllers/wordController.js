@@ -21,6 +21,13 @@ const insertWord = async function (req, res) {
     res.status(200).json(result);
 }
 
+const deleteWord = async function (req, res) {
+    let wordSeq = req.body.seq;
+    let result = await wordModel.deleteWord(wordSeq);
+    res.status(200).json(result);
+
+}
+
 const getAllNewsInfo = async function (req, res) {
     let mainUrl = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100"
     // let content = ""
@@ -75,5 +82,6 @@ const getHtml = (url) => {
 module.exports = {
     getWords,
     insertWord,
+    deleteWord,
     getAllNewsInfo
 }
