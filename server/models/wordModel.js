@@ -6,6 +6,13 @@ exports.getWords = async function(){
     return wordList;
 }
 
+exports.insertWord = async function(data){
+    let sql = `INSERT INTO TBL_WORD_LIST (WL_CATE, WL_NAME, WL_URL, WL_WORD_RANK, WL_IMPOTANCE) VALUES ('${data.cate}', '${data.name}', '${data.url}', ${data.wordRank}, ${data.impotance})`
+
+    let [result, fields] = await db.execute(sql);
+    return result
+}
+
 exports.getAllNode = async function(todoSeq){
     let sql, node, result=[], isNullTail=false;
     // Head Search

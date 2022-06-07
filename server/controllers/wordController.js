@@ -9,6 +9,18 @@ const getWords = async function (req, res) {
     res.status(200).json(result);
 }
 
+const insertWord = async function (req, res) {
+    let data = {
+        cate: req.body.cate,
+        name: req.body.name,
+        url: req.body.url,
+        wordRank: req.body.wordRank,
+        impotance: req.body.impotance,
+    }
+    let result = await wordModel.insertWord(data);
+    res.status(200).json(result);
+}
+
 const getAllNewsInfo = async function (req, res) {
     let mainUrl = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100"
     // let content = ""
@@ -62,5 +74,6 @@ const getHtml = (url) => {
 
 module.exports = {
     getWords,
+    insertWord,
     getAllNewsInfo
 }

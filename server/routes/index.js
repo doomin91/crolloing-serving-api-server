@@ -20,6 +20,47 @@ const wordController = require("../controllers/wordController")
 
     /**
      * @swagger
+     *  /api/insertWord:
+     *    post:
+     *      tags:
+     *      - word
+     *      description: 모든 토픽 조회
+     *      parameters:
+     *      - in: body
+     *        name: Request
+     *        description: 모든 값을 알맞게 넣어주세요.
+     *        schema:
+     *          $ref: '#/definitions/User'
+     *      produces:
+     *      - application/json
+     *      responses:
+     *       200:
+     *        description: 모든 토픽 조회
+     * definitions:
+     *  User:
+     *    type: object
+     *    required:
+     *      - cate
+     *      - name
+     *      - url
+     *      - wordRank
+     *      - impotance
+     *    properties:
+     *      cate:
+     *        type: string
+     *      name:
+     *        type: string
+     *      url:
+     *        type: string
+     *      wordRank:
+     *        type: integer
+     *      impotance:
+     *        type: integer
+     */
+     router.post("/api/insertWord",               wordController.insertWord)
+
+    /**
+     * @swagger
      *  /api/getAllNewsInfo:
      *    get:
      *      tags:
