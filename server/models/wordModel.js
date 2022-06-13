@@ -20,6 +20,41 @@ exports.deleteWord = async function(wordSeq){
     return result
 }
 
+exports.getRawData = async function (id){
+    let sql = `SELECT * FROM TBL_RAW_DATA WHERE ID = ${id}`;
+    let [rawData, fields] = await db.query(sql);
+    return rawData;
+}
+
+exports.insertRawData = async function (data){
+    let sql = `INSERT INTO TBL_RAW_DATA (ID, CODE, TITLE, URL, CONTENT, REG_DATE, MOD_DATE) VALUES (
+        '${data.id}',
+        '${data.code}',
+        '${escapeString(data.title)}',
+        '${data.url}',
+        '${escapeString(data.content)}}',
+        '${isEmpty(data.regDate)}',
+        '${isEmpty(data.modDate)}')`
+        
+    let [result, fields] = await db.execute(sql);
+    return result
+}
+
+function escapeString(str){
+    str = str.replace(/\\/g, "\\\\")
+        .replace(/\$/g, "\\$")
+        .replace(/'/g, "\\'")
+        .replace(/"/g, "\\\"")
+    return str
+}
+
+function isEmpty(str){
+    if(str == undefined || str == null || str == ""){
+        return ""
+    }
+    return str
+}
+
 exports.getAllNode = async function(todoSeq){
     let sql, node, result=[], isNullTail=false;
     // Head Search

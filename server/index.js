@@ -13,6 +13,10 @@ if(runType == "DEV"){
     app.use(cors())
 }
 
+process.on('uncaughtException', (err) => {
+    console.error('예기치 못한 에러', err);
+});
+
 // Post 요청을 사용하기 위해 미들웨어 사용
 app.use(express.json());
 app.use(express.urlencoded({ extended : true }));

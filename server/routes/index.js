@@ -89,6 +89,66 @@ const wordController = require("../controllers/wordController")
      */
      router.post("/api/deleteWord",               wordController.deleteWord)
 
+    /**
+     * @swagger
+     *  /api/getNewsData:
+     *    post:
+     *      tags:
+     *      - word
+     *      description: 코드 값에 따라 뉴스 데이터를 가져옵니다.<br>
+     *          <table>
+     *             <tr>
+     *                <td>항목</td>
+     *                <td>코드</td>
+     *            </tr>
+     *            <tr>
+     *                <td>정치</td>
+     *                <td>100(default)</td>
+     *            </tr>
+     *            <tr>
+     *                <td>경제</td>
+     *                <td>101</td>
+     *            </tr>
+     *            <tr>
+     *                <td>사회</td>
+     *                <td>102</td>
+     *            </tr>
+     *            <tr>
+     *                <td>생활/문화</td>
+     *                <td>103</td>
+     *            </tr>
+     *            <tr>
+     *                <td>IT/과학</td>
+     *                <td>104</td>
+     *            </tr>
+     *            <tr>
+     *                <td>세계</td>
+     *                <td>105</td>
+     *            </tr>
+     *          </table>
+     *      parameters:
+     *      - in: body
+     *        name: Request
+     *        description: 모든 값을 알맞게 넣어주세요.
+     *        schema:
+     *          $ref: '#/definitions/getNewsData'
+     *      produces:
+     *      - application/json
+     *      responses:
+     *       200:
+     *        description: Success
+     * definitions:
+     *  getNewsData:
+     *    type: object
+     *    required:
+     *      - code
+     *    properties:
+     *      code:
+     *        type: integer
+     *        default: 100
+     */
+
+     router.post("/api/getNewsData",               wordController.getNewsData)
 
     /**
      * @swagger
