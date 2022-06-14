@@ -70,14 +70,10 @@ const getNewsData = async function(req, res){
                     "title": $(this).find("div.cluster_text a").text(),
                     "url" : url,
                     "content": ""
-                }        
+                }
             })
             return ulList
         })
-
-        date = new Date()
-        console.log(date);
-        return false;
 
         const content = await main.reduce(async (prev, current, index, array) =>{
             const result = await prev.then()        
@@ -90,7 +86,7 @@ const getNewsData = async function(req, res){
                 array[index]["content"] = $content
                 array[index]["regDate"] = $regDate
                 array[index]["modDate"] = $modDate
-                check = await wordModel.getRawData(array[index]['id'])
+                check = await wordModel.getRawDataById(array[index]['id'])
                 if(check == ""){
                     await wordModel.insertRawData(array[index])
                 }   
@@ -101,41 +97,61 @@ const getNewsData = async function(req, res){
         console.log(e)
         res.json("error")
     }
-
 }
 
-const getAllNewsInfo = async function (req, res) {
-    try {
-        let mainUrl = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100"
-        // let content = ""
-        const main = await getHtml(mainUrl)
-        .then(data => {
-            var ulList = []
-            const $ = cheerio.load(data)
-            const $bodyList = $("div.cluster").children("div.cluster_group")
-            $bodyList.each(function(idx, val) {
-                ulList[idx] = {
-                    "title": $(this).find("div.cluster_text a").text(),
-                    "url" : $(this).find("div.cluster_text a").attr("href")
-                }
-        })
-        return ulList
-        })
-        const content = await main.reduce(async (prev, current, index, array) =>{
-            const result = await prev.then()        
-            const data = await getHtml(current.url).then(data => {
-                const $ = cheerio.load(data)
-                const $content = $("div._article_content").text()
-                array[index]["content"] = $content
-                return $content
-            })
-        }, Promise.resolve([]))
-        
-        res.status(200).json(main)
-        } catch (e) {
+const getRawData = async function (req, res) {
+    try{
+        let result = await wordModel.getRawData()
+        res.status(200).json(result)
+    } catch (e) {
+        console.log(e)
         res.json("error")
     }
 }
+
+const updateRawData = async function (req, res) {
+    try{
+        let id = req.body.id
+        let result = await wordModel.updateRawData(id)
+        res.status(200).json(result)
+    } catch (e) {
+        console.log(e)
+        res.json("error")
+    }
+}
+
+// const getAllNewsInfo = async function (req, res) {
+//     try {
+//         let mainUrl = "https://news.naver.com/main/main.naver?mode=LSD&mid=shm&sid1=100"
+//         // let content = ""
+//         const main = await getHtml(mainUrl)
+//         .then(data => {
+//             var ulList = []
+//             const $ = cheerio.load(data)
+//             const $bodyList = $("div.cluster").children("div.cluster_group")
+//             $bodyList.each(function(idx, val) {
+//                 ulList[idx] = {
+//                     "title": $(this).find("div.cluster_text a").text(),
+//                     "url" : $(this).find("div.cluster_text a").attr("href")
+//                 }
+//         })
+//         return ulList
+//         })
+//         const content = await main.reduce(async (prev, current, index, array) =>{
+//             const result = await prev.then()        
+//             const data = await getHtml(current.url).then(data => {
+//                 const $ = cheerio.load(data)
+//                 const $content = $("div._article_content").text()
+//                 array[index]["content"] = $content
+//                 return $content
+//             })
+//         }, Promise.resolve([]))
+        
+//         res.status(200).json(main)
+//         } catch (e) {
+//         res.json("error")
+//     }
+// }
 
 const getHtml = (url) => {
     try {
@@ -163,5 +179,6 @@ module.exports = {
     insertWord,
     deleteWord,
     getNewsData,
-    getAllNewsInfo
+    getRawData,
+    updateRawData
 }

@@ -20,10 +20,24 @@ exports.deleteWord = async function(wordSeq){
     return result
 }
 
-exports.getRawData = async function (id){
+
+exports.getRawData = async function (){
+    let sql = `SELECT * FROM TBL_RAW_DATA WHERE ANALYSYS_YN = 'N'`;
+    let [rawData, fields] = await db.query(sql);
+    return rawData;
+}
+
+exports.getRawDataById = async function (id){
     let sql = `SELECT * FROM TBL_RAW_DATA WHERE ID = ${id}`;
     let [rawData, fields] = await db.query(sql);
     return rawData;
+}
+
+exports.updateRawData = async function (id){
+    let sql = `UPDATE TBL_RAW_DATA SET ANALYSYS_YN = 'Y' WHERE ID = ${id}`
+
+    let [result, fields] = await db.execute(sql);
+    return result
 }
 
 exports.insertRawData = async function (data){
@@ -45,6 +59,7 @@ function escapeString(str){
         .replace(/\$/g, "\\$")
         .replace(/'/g, "\\'")
         .replace(/"/g, "\\\"")
+        .trim()
     return str
 }
 

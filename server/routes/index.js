@@ -95,7 +95,7 @@ const wordController = require("../controllers/wordController")
      *    post:
      *      tags:
      *      - word
-     *      description: 코드 값에 따라 뉴스 데이터를 가져옵니다.<br>
+     *      description: (크롤링) 코드 값에 따라 뉴스 데이터를 가져옵니다.<br>
      *          <table>
      *             <tr>
      *                <td>항목</td>
@@ -147,23 +147,51 @@ const wordController = require("../controllers/wordController")
      *        type: integer
      *        default: 100
      */
-
      router.post("/api/getNewsData",               wordController.getNewsData)
 
     /**
      * @swagger
-     *  /api/getAllNewsInfo:
+     *  /api/getRawData:
      *    get:
      *      tags:
      *      - word
-     *      description: 네이버 뉴스 조회 Api
+     *      description: 네이버 뉴스 RAW DB 조회
      *      produces:
      *      - application/json
      *      responses:
      *       200:
-     *        description:  네이버 뉴스 조회 Api
+     *        description:  네이버 뉴스 RAW DB 조회
      */
-     router.get("/api/getAllNewsInfo",        wordController.getAllNewsInfo)
+     router.get("/api/getRawData",        wordController.getRawData)
+
+    /**
+     * @swagger
+     *  /api/updateRawData:
+     *    post:
+     *      tags:
+     *      - word
+     *      description: 분석이 완료된 Raw Data를 사용완료 상태로 변환합니다.
+     *      produces:
+     *      - application/json
+     *      responses:
+     *       200:
+     *        description:  완료
+     *      parameters:
+     *      - in: body
+     *        name: Request
+     *        description: 모든 값을 알맞게 넣어주세요.
+     *        schema:
+     *          $ref: '#/definitions/updateRawData'
+     * definitions:
+     *  updateRawData:
+     *    type: object
+     *    required:
+     *      - id
+     *    properties:
+     *      id:
+     *        type: integer
+     */
+     router.post("/api/updateRawData",        wordController.updateRawData)
 
 
     
