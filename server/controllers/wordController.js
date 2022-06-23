@@ -139,6 +139,7 @@ const getRankingData = async function (req, res) {
                             id = split[split.length - 1].split('?')[0]
                             let data = {
                                 "id": id,
+                                "code": 1,
                                 "news": newsName,
                                 "num": num,
                                 "title": title,
@@ -160,7 +161,7 @@ const getRankingData = async function (req, res) {
 
                 return ulList
             })
-            
+
             const content = await main.reduce(async (prev, current, index, array) =>{
                 const result = await prev.then()        
                 const data = await getHtml(current.url).then(async (data) => {
