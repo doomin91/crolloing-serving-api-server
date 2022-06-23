@@ -16,7 +16,6 @@ const getWords = async function (req, res) {
 
 const insertWord = async function (req, res) {
     try {
-
         let data = {
             cate: req.body.cate,
             name: req.body.name,
@@ -109,6 +108,82 @@ const getRawData = async function (req, res) {
     }
 }
 
+const getRankingData = async function (req, res) {
+    /*
+        정치        100
+        경제        101
+        사회        102
+        생활/문화   103
+        IT/과학     104
+        세계        105
+    */
+        try{
+            let mainUrl = `https://news.naver.com/main/ranking/popularDay.naver`
+            // let content = ""
+            const main = await getHtml(mainUrl)
+            .then(data => {
+                var ulList = []
+                const $ = cheerio.load(data)
+                const $bodyList = $("div._officeCard").children("div.rankingnews_box")
+                
+                $bodyList.each(function() {
+                    let newsName = $(this).find("strong.rankingnews_name").text()
+                    let $li = $(this).find("ul.rankingnews_list li")
+                    $li.each(function() {
+                        let error = $(this).find("p.rankingnews_error").text().length
+                        if(!error){
+                            let num = $(this).find("em.list_ranking_num").text()
+                            let title = $(this).find("div.list_content a").text()
+                            let url = $(this).find("div.list_content a").attr("href")
+                            let split = url.split('/')
+                            id = split[split.length - 1].split('?')[0]
+                            let data = {
+                                "id": id,
+                                "news": newsName,
+                                "num": num,
+                                "title": title,
+                                "url": url
+                            }
+                            ulList.push(data)
+                        }
+                    })
+                    
+
+                    // ulList[idx] = {
+                    //     "id": id,
+                    //     "code": newsCode,
+                    //     "title": $(this).find("div.cluster_text a").text(),
+                    //     "url" : url,
+                    //     "content": ""
+                    // }
+                })
+
+                return ulList
+            })
+            
+            const content = await main.reduce(async (prev, current, index, array) =>{
+                const result = await prev.then()        
+                const data = await getHtml(current.url).then(async (data) => {
+                    const $ = cheerio.load(data)
+                    const $content = $("div._article_content").text()
+                    const $regDate  = $("span._ARTICLE_DATE_TIME").attr("data-date-time")
+                    const $modDate  = $("span._ARTICLE_MODIFY_DATE_TIME").attr("data-date-time")
+                    array[index]["content"] = $content
+                    array[index]["regDate"] = $regDate
+                    array[index]["modDate"] = $modDate
+                    check = await wordModel.getRawDataById(array[index]['id'])
+                    if(check == ""){
+                        await wordModel.insertRawData(array[index])
+                    }   
+                })
+            }, Promise.resolve([]))
+            res.status(200).json(main)
+        } catch(e) {
+            console.log(e)
+            res.json("error")
+        }
+}
+
 const updateRawData = async function (req, res) {
     try{
         let id = req.body.id
@@ -180,5 +255,6 @@ module.exports = {
     deleteWord,
     getNewsData,
     getRawData,
+    getRankingData,
     updateRawData
 }

@@ -166,6 +166,22 @@ const wordController = require("../controllers/wordController")
 
     /**
      * @swagger
+     *  /api/getRankingData:
+     *    post:
+     *      tags:
+     *      - word
+     *      description: 네이버 뉴스 RAW DB 조회
+     *      produces:
+     *      - application/json
+     *      responses:
+     *       200:
+     *        description:  네이버 뉴스 RAW DB 조회
+     */
+     router.post("/api/getRankingData",        wordController.getRankingData)
+
+
+    /**
+     * @swagger
      *  /api/updateRawData:
      *    post:
      *      tags:
