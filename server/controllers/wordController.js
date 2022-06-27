@@ -3,11 +3,14 @@ const axios = require("axios")
 const cheerio = require("cheerio")
 const Iconv = require("iconv-lite")
 const promisePool = require("../lib/database")
-const { rawListeners, exit } = require("process")
 
 const getWords = async function (req, res) {
     try {
-        let result = await wordModel.getWords();
+        let data = {
+            "startDate": req.params.startDate,
+            "endDate": req.params.endDate
+        }
+        let result = await wordModel.getWords(data);
         res.status(200).json(result);
     } catch (e) {
         res.json("error")
