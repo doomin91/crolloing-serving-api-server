@@ -1,22 +1,39 @@
 // 'use strict'
 const express = require("express");
 const router = express.Router();
+var moment = require('moment')
+let now = moment().format("YYYY-MM-DD");
 
 const wordController = require("../controllers/wordController")
     /**
      * @swagger
-     *  /api/getWords:
+     *  /api/getWords/{startDate}/{endDate}:
      *    get:
      *      tags:
      *      - word
      *      description: 모든 토픽 조회
+     *      parameters:
+     *      - in: path
+     *        name: startDate
+     *        required: true
+     *        schema:
+     *          type: string
+     *          format: date
+     *          description: 시작 날짜
+     *      - in: path
+     *        name: endDate
+     *        required: true
+     *        schema:
+     *          type: string
+     *          format: date
+     *          description: 종료 날짜
      *      produces:
      *      - application/json
      *      responses:
      *       200:
      *        description: 모든 토픽 조회
      */
-    router.get("/api/getWords",               wordController.getWords)
+    router.get("/api/getWords/:startDate/:endDate",               wordController.getWords)
 
     /**
      * @swagger
@@ -43,7 +60,6 @@ const wordController = require("../controllers/wordController")
      *      - cate
      *      - name
      *      - url
-     *      - wordRank
      *      - impotance
      *    properties:
      *      cate:
@@ -52,8 +68,6 @@ const wordController = require("../controllers/wordController")
      *        type: string
      *      url:
      *        type: string
-     *      wordRank:
-     *        type: integer
      *      impotance:
      *        type: integer
      */
@@ -163,6 +177,22 @@ const wordController = require("../controllers/wordController")
      *        description:  네이버 뉴스 RAW DB 조회
      */
      router.get("/api/getRawData",        wordController.getRawData)
+
+    /**
+     * @swagger
+     *  /api/getRankingData:
+     *    post:
+     *      tags:
+     *      - word
+     *      description: 네이버 뉴스 RAW DB 조회
+     *      produces:
+     *      - application/json
+     *      responses:
+     *       200:
+     *        description:  네이버 뉴스 RAW DB 조회
+     */
+     router.post("/api/getRankingData",        wordController.getRankingData)
+
 
     /**
      * @swagger

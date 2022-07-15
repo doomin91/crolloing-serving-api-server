@@ -1,13 +1,17 @@
 const db = require("../lib/database")
+var moment = require('moment')
 
-exports.getWords = async function(){
-    let sql = `SELECT * FROM TBL_WORD_LIST WHERE WL_DEL_YN = 'N'`;
-    let [wordList, fields] = await db.query(sql);
+exports.getWords = async function(data){
+    let sql = `SELECT WL_SEQ, WL_CATE, WL_NAME, SUM(WL_IMPORTANCE) WL_IMPORTANCE, WL_REG_DATE FROM TBL_WORD_LIST
+    WHERE WL_REG_DATE > '${data.startDate}' AND WL_REG_DATE <= '${data.endDate}' AND WL_DEL_YN = 'N'
+    GROUP BY WL_NAME
+    ORDER BY WL_IMPORTANCE DESC`
+    let [wordList, fields] = await db.query(sql)
     return wordList;
 }
 
 exports.insertWord = async function(data){
-    let sql = `INSERT INTO TBL_WORD_LIST (WL_CATE, WL_NAME, WL_URL, WL_WORD_RANK, WL_IMPOTANCE) VALUES ('${data.cate}', '${data.name}', '${data.url}', ${data.wordRank}, ${data.impotance})`
+    let sql = `INSERT INTO TBL_WORD_LIST (WL_CATE, WL_NAME, WL_URL, WL_IMPORTANCE) VALUES ('${data.cate}', '${data.name}', '${data.url}', ${data.impotance})`
 
     let [result, fields] = await db.execute(sql);
     return result
