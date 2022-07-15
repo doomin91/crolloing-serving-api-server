@@ -147,7 +147,7 @@ const wordController = require("../controllers/wordController")
      *        type: integer
      *        default: 100
      */
-     router.post("/api/getNewsData",               wordController.getNewsData)
+    //  router.post("/api/getNewsData",               wordController.getNewsData)
 
     /**
      * @swagger
