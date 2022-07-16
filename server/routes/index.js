@@ -1,39 +1,157 @@
 // 'use strict'
 const express = require("express");
 const router = express.Router();
-var moment = require('moment')
-let now = moment().format("YYYY-MM-DD");
 
 const wordController = require("../controllers/wordController")
+const authController = require("../controllers/authController")
+
     /**
      * @swagger
-     *  /api/getWords/{startDate}/{endDate}:
+     *  /api/auth/login:
+     *    post:
+     *      tags:
+     *      - auth
+     *      description: username과 password로 API에 로그인합니다. token을 return합니다.
+     *      parameters:
+     *      - in: body
+     *        name: Request
+     *        schema:
+     *          $ref: '#/definitions/login'
+     *      responses:
+     *        200:
+     *          description: Successfully login
+     *          schema:
+     *            properties:
+     *              status:
+     *                type: string
+     *              data:
+     *                type: object
+     *                properties:
+     *                  auth:
+     *                    type: boolean
+     *                  token:
+     *                    type: string
+     *                  faId:
+     *                    type: string
+     *                  roles:
+     *                    type: string
+     */
+    router.post("/api/auth/login",               authController.login), 
+
+    /**
+     * @swagger
+     *  /api/auth/me:
+     *    post:
+     *      tags:
+     *      - auth
+     *      description: login
+     *      produces:
+     *      - application/json
+     *      responses:
+     *       200:
+     *        description:
+     */
+
+    router.get("/api/auth/me",                   authController.me),
+    /**
+     * @swagger
+     *  /api/auth/refresh:
+     *    get:
+     *      tags:
+     *      - auth
+     *      description: login
+     *      produces:
+     *      - application/json
+     *      responses:
+     *       200:
+     *        description:
+     */
+    router.get("/api/auth/refresh",              authController.refresh),
+    /**
+     * @swagger
+     *  /api/users:
+     *    get:
+     *      tags:
+     *      - auth
+     *      description: login
+     *      produces:
+     *      - application/json
+     *      responses:
+     *       200:
+     *        description:
+     */
+     router.get("/api/users",                     authController.getUsers),
+         /**
+     * @swagger
+     *  /api/users/{username}:
+     *    get:
+     *      tags:
+     *      - auth
+     *      description: login
+     *      produces:
+     *      - application/json
+     *      responses:
+     *       200:
+     *        description:
+     */
+     router.get("/api/users/{username}",          authController.getUserByName),
+         /**
+     * @swagger
+     *  /api/users:
+     *    post:
+     *      tags:
+     *      - auth
+     *      description: login
+     *      produces:
+     *      - application/json
+     *      responses:
+     *       200:
+     *        description:
+     */
+     router.post("/api/users",                    authController.insertUser),
+         /**
+     * @swagger
+     *  /api/users/{username}:
+     *    put:
+     *      tags:
+     *      - auth
+     *      description: login
+     *      produces:
+     *      - application/json
+     *      responses:
+     *       200:
+     *        description:
+     */
+     router.put("/api/users/{username}",          authController.updateUser),
+         /**
+     * @swagger
+     *  /api/users/{username}:
+     *    delete:
+     *      tags:
+     *      - auth
+     *      description: login
+     *      produces:
+     *      - application/json
+     *      responses:
+     *       200:
+     *        description:
+     */
+     router.delete("/api/users/{username}",       authController.deleteUser),
+
+    /**
+     * @swagger
+     *  /api/getWords:
      *    get:
      *      tags:
      *      - word
      *      description: 모든 토픽 조회
-     *      parameters:
-     *      - in: path
-     *        name: startDate
-     *        required: true
-     *        schema:
-     *          type: string
-     *          format: date
-     *          description: 시작 날짜
-     *      - in: path
-     *        name: endDate
-     *        required: true
-     *        schema:
-     *          type: string
-     *          format: date
-     *          description: 종료 날짜
      *      produces:
      *      - application/json
      *      responses:
      *       200:
      *        description: 모든 토픽 조회
      */
-    router.get("/api/getWords/:startDate/:endDate",               wordController.getWords)
+    router.get("/api/getWords",               wordController.getWords)
 
     /**
      * @swagger
@@ -60,6 +178,7 @@ const wordController = require("../controllers/wordController")
      *      - cate
      *      - name
      *      - url
+     *      - wordRank
      *      - impotance
      *    properties:
      *      cate:
@@ -68,6 +187,8 @@ const wordController = require("../controllers/wordController")
      *        type: string
      *      url:
      *        type: string
+     *      wordRank:
+     *        type: integer
      *      impotance:
      *        type: integer
      */
@@ -161,7 +282,7 @@ const wordController = require("../controllers/wordController")
      *        type: integer
      *        default: 100
      */
-    //  router.post("/api/getNewsData",               wordController.getNewsData)
+    //  router.post("/api/getNewsData",               wordController.getNewsData)a
 
     /**
      * @swagger
@@ -177,22 +298,6 @@ const wordController = require("../controllers/wordController")
      *        description:  네이버 뉴스 RAW DB 조회
      */
      router.get("/api/getRawData",        wordController.getRawData)
-
-    /**
-     * @swagger
-     *  /api/getRankingData:
-     *    post:
-     *      tags:
-     *      - word
-     *      description: 네이버 뉴스 RAW DB 조회
-     *      produces:
-     *      - application/json
-     *      responses:
-     *       200:
-     *        description:  네이버 뉴스 RAW DB 조회
-     */
-     router.post("/api/getRankingData",        wordController.getRankingData)
-
 
     /**
      * @swagger

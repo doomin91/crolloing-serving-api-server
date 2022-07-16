@@ -2,7 +2,6 @@ const wordModel = require("../models/wordModel")
 const axios = require("axios")
 const cheerio = require("cheerio")
 const Iconv = require("iconv-lite")
-const promisePool = require("../lib/database")
 
 const getWords = async function (req, res) {
     try {
@@ -176,9 +175,6 @@ const getRankingData = async function (req, res) {
                     array[index]["regDate"] = $regDate
                     array[index]["modDate"] = $modDate
                     check = await wordModel.getRawDataById(array[index]['id'])
-                    if(check == ""){
-                        await wordModel.insertRawData(array[index])
-                    }   
                 })
             }, Promise.resolve([]))
             res.status(200).json(main)
