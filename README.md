@@ -10,9 +10,9 @@
 > 3개의 파트로 나뉘며, 나를 포함한 3명의 개발자와 함께 작업할 예정이다.
 > 
 > 메인이 되는 [언어스택]은 아래와 같다.
-> [Frontend] Flutter
-> [Backend] Node.js - Express - Mysql ( + MongoDB )
-> [Engine] Python - Tensorflow
+> [Frontend] Flutter 
+> [Backend] Node.js - Express - Mysql ( + MongoDB ) 
+> [Engine] Python - Tensorflow 
 
 --------------------------------
 
