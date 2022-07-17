@@ -7,8 +7,8 @@ const jwt = require('jsonwebtoken')
 const login = async function(req, res) {
     try{
         const payload = {
-            _id: "1",
-            username: "1"
+            _id: "admin",
+            username: "1234"
         }
         jwt.sign(payload, process.env.SECRET_KEY, {expiresIn: "7d"}, function(err, token){
             if(err) return res.json(err);
