@@ -41,7 +41,7 @@ const authController = require("../controllers/authController")
     /**
      * @swagger
      *  /api/auth/me:
-     *    post:
+     *    get:
      *      tags:
      *      - auth
      *      description: login

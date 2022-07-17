@@ -7,19 +7,25 @@ const jwt = require('jsonwebtoken')
 const login = async function(req, res) {
     try{
         const secretKey = process.env.SECRET_KEY
-        const algorithm = process.env.JWT_ALG
         const expiresIn = process.env.JWT_EXP
         const issuer = process.env.JWT_ISSUER
-        const option = {algorithm, expiresIn, issuer}
-        const result = jwt.sign(payload, secretKey, option)
-        res.json(result)
+        const option = {expiresIn, issuer}
+        const payload = {
+            _id: "1",
+            username: "1"
+        }
+        jwt.sign(payload, secretKey, option, function(err, token){
+            if(err) return res.json(err);
+            res.json(token);
+          });
     } catch (e){
         res.json(e)
     }
 }
 const me = async function(req, res) {
     try{
-        res.json("1")
+        const token = req.headers['x-access-token']
+        res.json(token)
     } catch (e){
         res.json(e)
     }
