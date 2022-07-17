@@ -6,15 +6,11 @@ const jwt = require('jsonwebtoken')
 
 const login = async function(req, res) {
     try{
-        const secretKey = process.env.SECRET_KEY
-        const expiresIn = process.env.JWT_EXP
-        const issuer = process.env.JWT_ISSUER
-        const option = {expiresIn, issuer}
         const payload = {
             _id: "1",
             username: "1"
         }
-        jwt.sign(payload, secretKey, option, function(err, token){
+        jwt.sign(payload, process.env.SECRET_KEY, {expiresIn: "7d"}, function(err, token){
             if(err) return res.json(err);
             res.json(token);
           });
@@ -25,7 +21,15 @@ const login = async function(req, res) {
 const me = async function(req, res) {
     try{
         const token = req.headers['x-access-token']
-        res.json(token)
+        console.log(token)
+        if (!token) return res.json('token is required!');
+        jwt.verify(token, process.env.SECRET_KEY, function(err, decoded) {
+            if(err) return res.json(err);
+            else{
+                req.decoded = decoded;
+                res.json(decoded)
+            }
+        });
     } catch (e){
         res.json(e)
     }
