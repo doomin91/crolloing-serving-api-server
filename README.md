@@ -1,4 +1,5 @@
-https://todayclick.api/api-docs
+URL : https://todayapi.click/api-docs
+( 수시로 개발되고 있으므로 접속이 원활하지 않습니다. )
 
 -------------------------------------------
 
