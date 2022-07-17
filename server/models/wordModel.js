@@ -45,8 +45,9 @@ exports.updateRawData = async function (id){
 }
 
 exports.insertRawData = async function (data){
-    let sql = `INSERT INTO TBL_RAW_DATA (ID, CODE, TITLE, URL, CONTENT, REG_DATE, MOD_DATE) VALUES (
+    let sql = `INSERT INTO TBL_RAW_DATA (ID, COMPANY, CODE, TITLE, URL, CONTENT, REG_DATE, MOD_DATE) VALUES (
         '${data.id}',
+        '${data.news}',
         '${data.code}',
         '${escapeString(data.title)}',
         '${data.url}',

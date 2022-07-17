@@ -282,7 +282,22 @@ const authController = require("../controllers/authController")
      *        type: integer
      *        default: 100
      */
-    //  router.post("/api/getNewsData",               wordController.getNewsData)a
+    //  router.post("/api/getNewsData",               wordController.getNewsData)
+
+    /**
+     * @swagger
+     *  /api/getRankingData:
+     *    post:
+     *      tags:
+     *      - word
+     *      description: 네이버 뉴스 RAW DB 조회
+     *      produces:
+     *      - application/json
+     *      responses:
+     *       200:
+     *        description:  네이버 뉴스 RAW DB 조회
+     */
+     router.post("/api/getRankingData",        wordController.getRankingData)
 
     /**
      * @swagger

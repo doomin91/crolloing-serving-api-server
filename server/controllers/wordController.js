@@ -141,7 +141,6 @@ const getRankingData = async function (req, res) {
                             id = split[split.length - 1].split('?')[0]
                             let data = {
                                 "id": id,
-                                "code": 1,
                                 "news": newsName,
                                 "num": num,
                                 "title": title,
@@ -168,16 +167,19 @@ const getRankingData = async function (req, res) {
                 const result = await prev.then()        
                 const data = await getHtml(current.url).then(async (data) => {
                     const $ = cheerio.load(data)
+                    const $category = $("ul.Nlnb_menu_list").children("li.is_active").text()
                     const $content = $("div._article_content").text()
                     const $regDate  = $("span._ARTICLE_DATE_TIME").attr("data-date-time")
                     const $modDate  = $("span._ARTICLE_MODIFY_DATE_TIME").attr("data-date-time")
+                    array[index]["code"] = $category
                     array[index]["content"] = $content
                     array[index]["regDate"] = $regDate
                     array[index]["modDate"] = $modDate
                     check = await wordModel.getRawDataById(array[index]['id'])
+                    if(check == "") await wordModel.insertRawData(array[index])
                 })
             }, Promise.resolve([]))
-            res.status(200).json(main)
+            res.status(200).json("success")
         } catch(e) {
             console.log(e)
             res.json("error")
