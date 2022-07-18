@@ -2,7 +2,7 @@ const db = require("../lib/database")
 var moment = require('moment')
 
 exports.getWords = async function(data){
-    let sql = `SELECT WL_SEQ, WL_CATE, WL_NAME, SUM(WL_IMPORTANCE) WL_IMPORTANCE, WL_REG_DATE FROM TBL_WORD_LIST
+    let sql = `SELECT WL_SEQ, WL_CATE, WL_NAME, WL_RELATED_WORDS, CAST(SUM(WL_IMPORTANCE) AS SIGNED INTEGER) WL_IMPORTANCE, WL_REG_DATE FROM TBL_WORD_LIST
     WHERE WL_REG_DATE > '${data.startDate}' AND WL_REG_DATE <= '${data.endDate}' AND WL_DEL_YN = 'N'
     GROUP BY WL_NAME
     ORDER BY WL_IMPORTANCE DESC`

@@ -140,18 +140,33 @@ const authController = require("../controllers/authController")
 
     /**
      * @swagger
-     *  /api/getWords:
+     *  /api/getWords/{startDate}/{endDate}:
      *    get:
      *      tags:
      *      - word
      *      description: 모든 토픽 조회
+     *      parameters:
+     *      - in: path
+     *        name: startDate
+     *        required: true
+     *        schema:
+     *          type: string
+     *          format: date
+     *          description: 시작 날짜
+     *      - in: path
+     *        name: endDate
+     *        required: true
+     *        schema:
+     *          type: string
+     *          format: date
+     *          description: 종료 날짜
      *      produces:
      *      - application/json
      *      responses:
      *       200:
      *        description: 모든 토픽 조회
      */
-    router.get("/api/getWords",               wordController.getWords)
+    router.get("/api/getWords/:startDate/:endDate",               wordController.getWords)
 
     /**
      * @swagger
