@@ -70,7 +70,7 @@ function escapeString(str){
 
 function isEmpty(str){
     if(str == undefined || str == null || str == ""){
-        return ""
+        return "0"
     }
     return str
 }
