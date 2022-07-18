@@ -192,20 +192,28 @@ const authController = require("../controllers/authController")
      *    required:
      *      - cate
      *      - name
-     *      - url
-     *      - impotance
+     *      - importance
      *    properties:
      *      cate:
      *        type: string
      *      name:
      *        type: string
      *      relatedWords:
-     *        type: string
+     *        type: array
+     *        items: 
+     *          type: string
      *      relatedNews:
-     *        type: string
+     *        type: array
+     *        items: 
+     *          type: object
+     *          properties:
+     *            url: 
+     *              type: string
+     *            title: 
+     *              type: string
      *      url:
      *        type: string
-     *      impotance:
+     *      importance:
      *        type: integer
      */
      router.post("/api/insertWord",               wordController.insertWord)

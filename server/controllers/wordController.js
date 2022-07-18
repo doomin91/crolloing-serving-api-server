@@ -19,14 +19,14 @@ const getWords = async function (req, res) {
 
 const insertWord = async function (req, res) {
     try {
+        console.log(req.body.relatedNews)
         let data = {
             cate: req.body.cate,
             name: req.body.name,
-            relatedWords: req.body.relatedWords,
-            relatedNews: req.body.relatedNews,
-            url: req.body.url,
+            relatedWords: JSON.stringify(req.body.relatedWords),
+            relatedNews: JSON.stringify(req.body.relatedNews),
             wordRank: req.body.wordRank,
-            impotance: req.body.impotance,
+            importance: req.body.importance,
         }
         let result = await wordModel.insertWord(data);
         res.status(200).json(result);
