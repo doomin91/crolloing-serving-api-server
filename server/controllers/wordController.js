@@ -21,6 +21,7 @@ const insertWord = async function (req, res) {
         let data = {
             cate: req.body.cate,
             name: req.body.name,
+            relatedWords: req.body.relatedWords,
             url: req.body.url,
             wordRank: req.body.wordRank,
             impotance: req.body.impotance,

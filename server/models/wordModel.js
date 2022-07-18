@@ -11,7 +11,7 @@ exports.getWords = async function(data){
 }
 
 exports.insertWord = async function(data){
-    let sql = `INSERT INTO TBL_WORD_LIST (WL_CATE, WL_NAME, WL_URL, WL_IMPORTANCE) VALUES ('${data.cate}', '${data.name}', '${data.url}', ${data.impotance})`
+    let sql = `INSERT INTO TBL_WORD_LIST (WL_CATE, WL_NAME, WL_RELATED_WORDS, WL_URL, WL_IMPORTANCE) VALUES ('${data.cate}', '${data.name}', '${data.relatedWords}', '${data.url}', ${data.impotance})`
 
     let [result, fields] = await db.execute(sql);
     return result

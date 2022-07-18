@@ -178,17 +178,16 @@ const authController = require("../controllers/authController")
      *      - cate
      *      - name
      *      - url
-     *      - wordRank
      *      - impotance
      *    properties:
      *      cate:
      *        type: string
      *      name:
      *        type: string
+     *      relatedWords:
+     *        type: string
      *      url:
      *        type: string
-     *      wordRank:
-     *        type: integer
      *      impotance:
      *        type: integer
      */
