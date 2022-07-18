@@ -23,6 +23,7 @@ const insertWord = async function (req, res) {
             cate: req.body.cate,
             name: req.body.name,
             relatedWords: req.body.relatedWords,
+            relatedNews: req.body.relatedNews,
             url: req.body.url,
             wordRank: req.body.wordRank,
             impotance: req.body.impotance,
