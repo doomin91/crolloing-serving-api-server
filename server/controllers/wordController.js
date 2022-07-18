@@ -12,7 +12,8 @@ const getWords = async function (req, res) {
         let result = await wordModel.getWords(data);
         res.status(200).json(result);
     } catch (e) {
-        res.json("error")
+        console.log(e)
+        res.json(e)
     }
 }
 
@@ -29,7 +30,8 @@ const insertWord = async function (req, res) {
         let result = await wordModel.insertWord(data);
         res.status(200).json(result);
     } catch (e) {
-        res.json("error")
+        console.log(e)
+        res.json(e)
     }
 }
 
@@ -39,7 +41,8 @@ const deleteWord = async function (req, res) {
         let result = await wordModel.deleteWord(wordSeq);
         res.status(200).json(result);
     } catch (e) {
-        res.json("error")
+        console.log(e)
+        res.json(e)
     }
 
 }
@@ -97,7 +100,7 @@ const deleteWord = async function (req, res) {
 //         res.status(200).json(main)
 //     } catch(e) {
 //         console.log(e)
-//         res.json("error")
+//         res.json(e)
 //     }
 // }
 
@@ -107,7 +110,7 @@ const getRawData = async function (req, res) {
         res.status(200).json(result)
     } catch (e) {
         console.log(e)
-        res.json("error")
+        res.json(e)
     }
 }
 
@@ -183,7 +186,7 @@ const getRankingData = async function (req, res) {
             res.status(200).json("success")
         } catch(e) {
             console.log(e)
-            res.json("error")
+            res.json(e)
         }
 }
 
@@ -194,7 +197,7 @@ const updateRawData = async function (req, res) {
         res.status(200).json(result)
     } catch (e) {
         console.log(e)
-        res.json("error")
+        res.json(e)
     }
 }
 
@@ -227,7 +230,7 @@ const updateRawData = async function (req, res) {
         
 //         res.status(200).json(main)
 //         } catch (e) {
-//         res.json("error")
+//         res.json(e)
 //     }
 // }
 
