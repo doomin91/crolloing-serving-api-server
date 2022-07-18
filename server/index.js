@@ -9,19 +9,19 @@ require("dotenv").config();
 app.use(cors())
 
 // Database
-mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGO_DB_LOGIN_API);
-var db = mongoose.connection;
-db.once('open', function () {
-   console.log('DB connected!');
-});
-db.on('error', function (err) {
-  console.log('DB ERROR:', err);
-});
+// mongoose.Promise = global.Promise;
+// mongoose.connect(process.env.MONGO_DB_LOGIN_API);
+// var db = mongoose.connection;
+// db.once('open', function () {
+//    console.log('DB connected!');
+// });
+// db.on('error', function (err) {
+//   console.log('DB ERROR:', err);
+// });
 
-process.on('uncaughtException', (err) => {
-    console.error('예기치 못한 에러', err);
-});
+// process.on('uncaughtException', (err) => {
+//     console.error('예기치 못한 에러', err);
+// });
 
 // Middlewares
 app.use(express.json());
